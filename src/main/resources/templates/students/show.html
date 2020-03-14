@@ -9,7 +9,7 @@
 <h4>Teachers:</h4>
 <ul>
     <li th:each="tc : ${student.teachers}">
-        <p th:text="${tc + ' - ' + tc.university.toString()}">TEACHER</p>
+        <p th:text="${tc.toString() + ' - ' + tc.university.toString()}">TEACHER</p>
     </li>
 </ul>
 <p><a th:href="${'/students/' + student.id + '?form'}">Update information</a></p>

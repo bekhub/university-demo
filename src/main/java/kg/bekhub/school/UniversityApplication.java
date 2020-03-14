@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
-public class SchoolApplication {
+public class UniversityApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SchoolApplication.class, args);
+        SpringApplication.run(UniversityApplication.class, args);
     }
 }

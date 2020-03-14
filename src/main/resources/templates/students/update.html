@@ -36,10 +36,12 @@
     <br/>
     <div id="teachers" th:each="teacher : ${teachers}">
         <input type="checkbox" name="teachers" th:value="${teacher.id}"/>
-        <span th:text="${teacher + ' ' + teacher.university.toString()}">Teacher</span><br/>
+        <span th:text="${teacher.toString() + ' - ' + teacher.university.toString()}">Teacher</span><br/>
     </div>
 
     <input type="submit" value="Submit"/>
 </form>
+<p><a th:href="${'/students/' + student.id}">Back</a></p>
+<p><a th:href="@{/}">Home</a></p>
 </body>
 </html>

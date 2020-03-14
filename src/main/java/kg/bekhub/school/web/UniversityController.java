@@ -1,7 +1,6 @@
 package kg.bekhub.school.web;
 
-import kg.bekhub.school.Teacher;
-import kg.bekhub.school.University;
+import kg.bekhub.school.entities.University;
 import kg.bekhub.school.data.TeacherRepository;
 import kg.bekhub.school.data.UniversityRepository;
 import kg.bekhub.school.util.UrlUtil;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller

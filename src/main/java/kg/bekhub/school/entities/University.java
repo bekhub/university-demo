@@ -1,4 +1,4 @@
-package kg.bekhub.school;
+package kg.bekhub.school.entities;
 
 import lombok.Data;
 

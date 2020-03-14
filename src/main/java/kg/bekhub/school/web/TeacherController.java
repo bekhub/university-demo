@@ -1,8 +1,8 @@
 package kg.bekhub.school.web;
 
-import kg.bekhub.school.Student;
-import kg.bekhub.school.Teacher;
-import kg.bekhub.school.University;
+import kg.bekhub.school.entities.Student;
+import kg.bekhub.school.entities.Teacher;
+import kg.bekhub.school.entities.University;
 import kg.bekhub.school.data.StudentRepository;
 import kg.bekhub.school.data.TeacherRepository;
 import kg.bekhub.school.data.UniversityRepository;

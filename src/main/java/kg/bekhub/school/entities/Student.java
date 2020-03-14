@@ -1,4 +1,4 @@
-package kg.bekhub.school;
+package kg.bekhub.school.entities;
 
 import lombok.Data;
 
@@ -6,8 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,7 +27,7 @@ public class Student {
     @ManyToMany(targetEntity = Teacher.class)
     @Size(min=1, message = "Min: 1")
     @NotEmpty
-    private Set<Teacher> teachers = new HashSet<>();
+    private List<Teacher> teachers = new ArrayList<>();
 
     @Override
     public String toString() {
