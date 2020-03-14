@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${university}">University</title>
+</head>
+<body>
+<h3 th:text="${university}">University</h3>
+<h4>Teachers:</h4>
+<ul>
+    <li th:each="tc : ${teachers}">
+        <p th:text="${tc}">TEACHER</p>
+    </li>
+</ul>
+<p><a th:href="${'/universities/' + university.id + '?form'}">Update information</a></p>
+<p><a th:href="@{/universities}">Back</a></p>
+<p><a th:href="@{/}">Home</a></p>
+</body>
+</html>

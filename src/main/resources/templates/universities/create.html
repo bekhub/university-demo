@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Creating university</title>
+</head>
+<body>
+<h2>Creating university</h2>
+<form method="POST" th:object="${university}">
+
+    <div th:if="${#fields.hasErrors()}">
+        <span class="validationError">
+        Please correct the problems below and resubmit.
+        </span>
+    </div>
+
+    <label for="name">University: </label>
+    <input id="name" type="text" th:field="*{name}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}">Name Error</span>
+    <br/>
+
+    <label for="location">Location: </label>
+    <input id="location" type="text" th:field="*{location}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('location')}"
+          th:errors="*{location}">Name Error</span>
+    <br/>
+
+    <input type="submit" value="Submit"/>
+</form>
+<p><a th:href="@{/universities}">Back</a></p>
+<p><a th:href="@{/}">Home</a></p>
+</body>
+</html>

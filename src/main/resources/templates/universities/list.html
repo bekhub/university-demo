@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Universities</title>
+</head>
+<body>
+<div>
+    <ul>
+        <li th:each="un : ${universities}">
+            <a th:href="${'/universities/' + un.id}" th:text="${un}"></a>
+        </li>
+    </ul>
+</div>
+<p><a th:href="${'/universities?form'}">Create university</a></p>
+<p><a th:href="@{/}">Home</a></p>
+</body>
+</html>

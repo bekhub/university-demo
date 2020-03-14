@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<body>
+<div>
+    <ul>
+        <li th:each="std : ${students}">
+            <a th:href="${'/students/' + std.id}" th:text="${std}"></a>
+        </li>
+    </ul>
+</div>
+<p><a th:href="${'/students?form'}">Create student</a></p>
+<p><a th:href="@{/}">Home</a></p>
+</body>
+</html>

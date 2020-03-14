@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Creating teacher</title>
+</head>
+<body>
+<h2>Creating teacher</h2>
+<form method="POST" th:object="${teacher}">
+
+    <div th:if="${#fields.hasErrors()}">
+        <span class="validationError">
+        Please correct the problems below and resubmit.
+        </span>
+    </div>
+
+    <label for="firstName">First name: </label>
+    <input id="firstName" type="text" th:field="*{firstName}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('firstName')}"
+          th:errors="*{firstName}">Name Error</span>
+    <br/>
+
+    <label for="lastName">Last name: </label>
+    <input id="lastName" type="text" th:field="*{lastName}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('lastName')}"
+          th:errors="*{lastName}">Name Error</span>
+    <br/>
+
+    <label for="universities">Universities: </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('university')}"
+          th:errors="*{university}">Name Error</span>
+    <br/>
+    <div id="universities" th:each="university : ${universities}">
+        <input type="radio" name="university" th:value="${university.id}"/>
+        <span th:text="${university}">University</span><br/>
+    </div>
+
+    <input type="submit" value="Submit"/>
+</form>
+<p><a th:href="@{/teachers}">Back</a></p>
+<p><a th:href="@{/}">Home</a></p>
+</body>
+</html>

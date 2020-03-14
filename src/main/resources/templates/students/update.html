@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${student}">Title</title>
+</head>
+<body>
+<h2>Updating information</h2>
+<h3 th:text="${student}"></h3>
+<form method="POST" th:action="${'/students/' + student.id + '?form'}" th:object="${student}">
+
+    <div th:if="${#fields.hasErrors()}">
+        <span class="validationError">
+        Please correct the problems below and resubmit.
+        </span>
+    </div>
+
+    <label for="firstName">First name: </label>
+    <input id="firstName" type="text" th:field="*{firstName}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('firstName')}"
+          th:errors="*{firstName}">Name Error</span>
+    <br/>
+
+    <label for="lastName">Last name: </label>
+    <input id="lastName" type="text" th:field="*{lastName}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('lastName')}"
+          th:errors="*{lastName}">Name Error</span>
+    <br/>
+
+    <label for="teachers">Teachers: </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('teachers')}"
+          th:errors="*{teachers}">Name Error</span>
+    <br/>
+    <div id="teachers" th:each="teacher : ${teachers}">
+        <input type="checkbox" name="teachers" th:value="${teacher.id}"/>
+        <span th:text="${teacher + ' ' + teacher.university.toString()}">Teacher</span><br/>
+    </div>
+
+    <input type="submit" value="Submit"/>
+</form>
+</body>
+</html>

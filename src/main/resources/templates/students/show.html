@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${student}">STUDENT</title>
+</head>
+<body>
+<h3 th:text="${student}">STUDENT</h3>
+<h4>Teachers:</h4>
+<ul>
+    <li th:each="tc : ${student.teachers}">
+        <p th:text="${tc + ' - ' + tc.university.toString()}">TEACHER</p>
+    </li>
+</ul>
+<p><a th:href="${'/students/' + student.id + '?form'}">Update information</a></p>
+<p><a th:href="@{/students}">Back</a></p>
+<p><a th:href="@{/}">Home</a></p>
+</body>
+</html>

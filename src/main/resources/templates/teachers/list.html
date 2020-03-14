@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers</title>
+</head>
+<body>
+<div>
+    <ul>
+        <li th:each="tc : ${teachers}">
+            <a th:href="${'/teachers/' + tc.id}" th:text="${tc}"></a>
+        </li>
+    </ul>
+</div>
+<p><a th:href="${'/teachers?form'}">Create teacher</a></p>
+<p><a th:href="@{/}">Home</a></p>
+</body>
+</html>
