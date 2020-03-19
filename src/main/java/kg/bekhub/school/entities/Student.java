@@ -24,7 +24,8 @@ public class Student {
     @Size(min = 3, max = 50, message = "Min: 3, Max: 50")
     private String lastName;
 
-    @ManyToMany(targetEntity = Teacher.class)
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "student_teachers")
     @Size(min=1, message = "Min: 1")
     @NotEmpty
     private List<Teacher> teachers = new ArrayList<>();

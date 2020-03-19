@@ -76,6 +76,20 @@ public class StudentController {
         return "students/update";
     }
 
+    @PostMapping(value = "/{id}", params = "del")
+    public String delete(@PathVariable("id") Integer id) {
+        log.info("Deleting student " + studentRepository.findById(id).get().toString());
+        studentRepository.deleteById(id);
+        return "redirect:/students";
+    }
+
+    @GetMapping(value = "/{id}", params = "del")
+    public String deleteForm(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("obj", studentRepository.findById(id).get());
+        model.addAttribute("path", "students");
+        return "/delete";
+    }
+
     @PostMapping
     public String create(@Valid Student student, Errors errors, Model model)
     {

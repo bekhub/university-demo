@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Deleting</title>
+</head>
+<body>
+<h3 style="color: darkorange" th:text="${'Do you really want to delete ' + obj.toString()}"></h3>
+<p><a th:href="${'/' + path + '/' + obj.id}" style="color: green">Back</a></p>
+<form th:action="${'/' + path + '/' + obj.id + '?del'}" method="post">
+    <input type="submit" value="Delete" style="color: darkred">
+</form>
+</body>
+</html>

@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -49,12 +48,6 @@ public class TeacherController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
         Teacher teacher = teacherRepository.findById(id).get();
-        List<Student> students = new ArrayList<>();
-        studentRepository.findAll().forEach(students::add);
-        students.forEach(i -> log.info(i.toString()));
-        students = filterStudentsByTeacherId(students, id);
-        students.forEach(i -> log.info(i.toString()));
-        model.addAttribute("students", students);
         model.addAttribute("teacher", teacher);
         return "/teachers/show";
     }
@@ -88,6 +81,24 @@ public class TeacherController {
         return "teachers/update";
     }
 
+    @PostMapping(value = "/{id}", params = "del")
+    public String delete(@PathVariable("id") Integer id) {
+        log.info("Deleting teacher " + teacherRepository.findById(id).get().toString());
+        try {
+            teacherRepository.deleteById(id);
+        } catch (Exception e) {
+            return "/del_error";
+        }
+        return "redirect:/teachers";
+    }
+
+    @GetMapping(value = "/{id}", params = "del")
+    public String deleteForm(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("obj", teacherRepository.findById(id).get());
+        model.addAttribute("path", "teachers");
+        return "/delete";
+    }
+
     @PostMapping
     public String create(@Valid Teacher teacher, Errors errors, Model model)
     {
@@ -106,19 +117,5 @@ public class TeacherController {
     public String createForm(Model model) {
         model.addAttribute("teacher", new Teacher());
         return "teachers/create";
-    }
-
-    private List<Student> filterStudentsByTeacherId(List<Student> students, int id) {
-        return students
-                .stream()
-                .filter(x -> {
-                    log.info(x.toString());
-                    for(var i : x.getTeachers()) {
-                        log.info(i.toString());
-                        if (i.getId().equals(id))
-                            return true;
-                    }
-                    return false;
-                }).collect(Collectors.toList());
     }
 }

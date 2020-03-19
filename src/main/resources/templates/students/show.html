@@ -13,6 +13,7 @@
     </li>
 </ul>
 <p><a th:href="${'/students/' + student.id + '?form'}">Update information</a></p>
+<p><a th:href="${'/students/' + student.id + '?del'}" style="color: darkred">Delete student</a></p>
 <p><a th:href="@{/students}">Back</a></p>
 <p><a th:href="@{/}">Home</a></p>
 </body>

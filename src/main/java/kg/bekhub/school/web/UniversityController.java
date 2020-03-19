@@ -1,7 +1,9 @@
 package kg.bekhub.school.web;
 
+import kg.bekhub.school.data.StudentRepository;
+import kg.bekhub.school.entities.Student;
+import kg.bekhub.school.entities.Teacher;
 import kg.bekhub.school.entities.University;
-import kg.bekhub.school.data.TeacherRepository;
 import kg.bekhub.school.data.UniversityRepository;
 import kg.bekhub.school.util.UrlUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -22,12 +27,12 @@ import java.util.List;
 public class UniversityController {
 
     private UniversityRepository universityRepository;
-    private TeacherRepository teacherRepository;
+    private StudentRepository studentRepository;
 
     @Autowired
-    public UniversityController(UniversityRepository universityRepository, TeacherRepository teacherRepository) {
+    public UniversityController(UniversityRepository universityRepository, StudentRepository studentRepository) {
         this.universityRepository = universityRepository;
-        this.teacherRepository = teacherRepository;
+        this.studentRepository = studentRepository;
     }
 
     @GetMapping
@@ -41,8 +46,10 @@ public class UniversityController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
         University university = universityRepository.findById(id).get();
+        Set<Student> students = new HashSet<>();
+        studentRepository.findAll().forEach(students::add);
+        model.addAttribute("students", filterStudentsByTeachers(students, university.getTeachers()));
         model.addAttribute("university", university);
-        model.addAttribute("teachers", teacherRepository.findAllByUniversityId(university.getId()));
         return "universities/show";
     }
 
@@ -68,6 +75,20 @@ public class UniversityController {
         return "universities/update";
     }
 
+    @PostMapping(value = "/{id}", params = "del")
+    public String delete(@PathVariable("id") Integer id) {
+        log.info("Deleting university " + universityRepository.findById(id).get().toString());
+        universityRepository.deleteById(id);
+        return "redirect:/universities";
+    }
+
+    @GetMapping(value = "/{id}", params = "del")
+    public String deleteForm(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("obj", universityRepository.findById(id).get());
+        model.addAttribute("path", "universities");
+        return "/delete";
+    }
+
     @PostMapping
     public String create(@Valid University university, Errors errors, Model model)
     {
@@ -86,5 +107,17 @@ public class UniversityController {
     public String createForm(Model model) {
         model.addAttribute("university", new University());
         return "universities/create";
+    }
+
+    private List<Student> filterStudentsByTeachers(Set<Student> students, List<Teacher> teachers) {
+        return students
+                .stream()
+                .filter(x -> {
+                    for (var i : teachers) {
+                        if(i.getStudent().contains(x))
+                            return true;
+                    }
+                    return false;
+                }).collect(Collectors.toList());
     }
 }

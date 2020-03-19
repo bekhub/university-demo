@@ -8,11 +8,18 @@
 <h3 th:text="${university}">University</h3>
 <h4>Teachers:</h4>
 <ul>
-    <li th:each="tc : ${teachers}">
+    <li th:each="tc : ${university.teachers}">
         <p th:text="${tc}">TEACHER</p>
     </li>
 </ul>
+<h4>Students:</h4>
+<ul>
+    <li th:each="std: ${students}">
+        <p th:text="${std}">Student</p>
+    </li>
+</ul>
 <p><a th:href="${'/universities/' + university.id + '?form'}">Update information</a></p>
+<p><a th:href="${'/universities/' + university.id + '?del'}" style="color: darkred">Delete university</a></p>
 <p><a th:href="@{/universities}">Back</a></p>
 <p><a th:href="@{/}">Home</a></p>
 </body>

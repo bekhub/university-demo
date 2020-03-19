@@ -3,8 +3,8 @@ package kg.bekhub.school.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,7 +19,7 @@ public class University {
 
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL,
     orphanRemoval = true)
-    private Set<Teacher> teachers = new HashSet<>();
+    private List<Teacher> teachers = new ArrayList<>();
 
     @Override
     public String toString() {
