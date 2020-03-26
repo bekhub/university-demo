@@ -79,7 +79,11 @@ public class StudentController {
     @PostMapping(value = "/{id}", params = "del")
     public String delete(@PathVariable("id") Integer id) {
         log.info("Deleting student " + studentRepository.findById(id).get().toString());
-        studentRepository.deleteById(id);
+        try {
+            studentRepository.deleteById(id);
+        } catch (Exception e) {
+            return "/del_error";
+        }
         return "redirect:/students";
     }
 

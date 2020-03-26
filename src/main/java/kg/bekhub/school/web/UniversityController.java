@@ -78,7 +78,11 @@ public class UniversityController {
     @PostMapping(value = "/{id}", params = "del")
     public String delete(@PathVariable("id") Integer id) {
         log.info("Deleting university " + universityRepository.findById(id).get().toString());
-        universityRepository.deleteById(id);
+        try {
+            universityRepository.deleteById(id);
+        } catch (Exception e) {
+            return "/del_error";
+        }
         return "redirect:/universities";
     }
 
