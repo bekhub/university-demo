@@ -1,11 +1,9 @@
 package kg.bekhub.school.web;
 
-import kg.bekhub.school.entities.Student;
-import kg.bekhub.school.entities.Teacher;
-import kg.bekhub.school.entities.University;
-import kg.bekhub.school.data.StudentRepository;
 import kg.bekhub.school.data.TeacherRepository;
 import kg.bekhub.school.data.UniversityRepository;
+import kg.bekhub.school.entities.Teacher;
+import kg.bekhub.school.entities.University;
 import kg.bekhub.school.util.UrlUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +24,12 @@ public class TeacherController {
 
     private TeacherRepository teacherRepository;
     private UniversityRepository universityRepository;
-    private StudentRepository studentRepository;
 
     @Autowired
     public TeacherController(TeacherRepository teacherRepository,
-                             UniversityRepository universityRepository,
-                             StudentRepository  studentRepository) {
+                             UniversityRepository universityRepository) {
         this.teacherRepository = teacherRepository;
         this.universityRepository = universityRepository;
-        this.studentRepository = studentRepository;
     }
 
     @GetMapping

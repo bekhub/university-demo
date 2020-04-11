@@ -1,6 +1,7 @@
 package kg.bekhub.school.web;
 
 import kg.bekhub.school.data.StudentRepository;
+import kg.bekhub.school.data.TeacherRepository;
 import kg.bekhub.school.entities.Student;
 import kg.bekhub.school.entities.Teacher;
 import kg.bekhub.school.entities.University;
@@ -28,11 +29,14 @@ public class UniversityController {
 
     private UniversityRepository universityRepository;
     private StudentRepository studentRepository;
+    private TeacherRepository teacherRepository;
 
     @Autowired
-    public UniversityController(UniversityRepository universityRepository, StudentRepository studentRepository) {
+    public UniversityController(UniversityRepository universityRepository, StudentRepository studentRepository,
+                                TeacherRepository teacherRepository) {
         this.universityRepository = universityRepository;
         this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     @GetMapping
@@ -48,8 +52,10 @@ public class UniversityController {
         University university = universityRepository.findById(id).get();
         Set<Student> students = new HashSet<>();
         studentRepository.findAll().forEach(students::add);
-        model.addAttribute("students", filterStudentsByTeachers(students, university.getTeachers()));
+        Set<Teacher> teachers = new HashSet<>(teacherRepository.findAllByUniversityId(university.getId()));
+        model.addAttribute("students", filterStudentsByTeachers(students, teachers));
         model.addAttribute("university", university);
+        model.addAttribute("teachers", teachers);
         return "universities/show";
     }
 
@@ -94,8 +100,7 @@ public class UniversityController {
     }
 
     @PostMapping
-    public String create(@Valid University university, Errors errors, Model model)
-    {
+    public String create(@Valid University university, Errors errors, Model model) {
         log.info("Creating university");
         if(errors.hasErrors()) {
             model.addAttribute("university", university);
@@ -113,15 +118,16 @@ public class UniversityController {
         return "universities/create";
     }
 
-    private List<Student> filterStudentsByTeachers(Set<Student> students, List<Teacher> teachers) {
+    private List<Student> filterStudentsByTeachers(Set<Student> students, Set<Teacher> teachers) {
         return students
                 .stream()
                 .filter(x -> {
-                    for (var i : teachers) {
+                    for(var i: teachers){
                         if(i.getStudent().contains(x))
                             return true;
                     }
                     return false;
-                }).collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
     }
 }

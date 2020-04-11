@@ -8,7 +8,7 @@
 <h3 th:text="${university}">University</h3>
 <h4>Teachers:</h4>
 <ul>
-    <li th:each="tc : ${university.teachers}">
+    <li th:each="tc : ${teachers}">
         <p th:text="${tc}">TEACHER</p>
     </li>
 </ul>

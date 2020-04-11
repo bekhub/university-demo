@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>Creating student</h2>
-<form method="POST" th:object="${student}">
+<form method="POST" th:object="${student}" th:action="@{/students}">
 
     <div th:if="${#fields.hasErrors()}">
         <span class="validationError">
