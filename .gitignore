@@ -32,3 +32,4 @@ build/
 .vscode/
 Будет удалено .mvn/
 Будет удалено src/main/resources/static/
+data
